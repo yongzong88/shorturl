@@ -1,6 +1,6 @@
 module shorturl
 
-go 1.14
+go 1.18
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
