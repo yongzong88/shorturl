@@ -1,14 +1,14 @@
 module shorturl
 
-go 1.18
+go 1.14
 
 require (
 	github.com/gin-contrib/sse v0.1.0 // indirect
-	github.com/gin-gonic/gin v1.7.7 // indirect
+	github.com/gin-gonic/gin v1.7.7
 	github.com/go-playground/locales v0.13.0 // indirect
 	github.com/go-playground/universal-translator v0.17.0 // indirect
 	github.com/go-playground/validator/v10 v10.4.1 // indirect
-	github.com/go-redis/redis v6.15.9+incompatible // indirect
+	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/golang/protobuf v1.3.3 // indirect
 	github.com/json-iterator/go v1.1.9 // indirect
 	github.com/leodido/go-urn v1.2.0 // indirect
