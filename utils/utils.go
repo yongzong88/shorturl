@@ -1,6 +1,9 @@
 package utils
 
-import "math/rand"
+import (
+	"math/rand"
+	"time"
+)
 
 const (
 	alphabet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" // 可用字元
@@ -8,6 +11,10 @@ const (
 	maxlen   = 10                                                               // 最長短網址長度
 	minlen   = 3                                                                // 最短短網址長度
 )
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+}
 
 func RandID() string {
 	n := minlen + rand.Intn(maxlen-minlen+1)

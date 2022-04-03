@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"reflect"
 	"shorturl/redis"
 	"shorturl/utils"
 	"time"
@@ -12,11 +11,15 @@ import (
 )
 
 func main() {
+	r := router()
+	r.Run(":9000")
+}
+
+func router() *gin.Engine {
 	r := gin.Default()
 	r.POST("/api/v1/urls", add)
 	r.GET("/:hash", visit)
-	r.Run(":9000")
-
+	return r
 }
 
 func add(c *gin.Context) {
@@ -25,15 +28,10 @@ func add(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	fmt.Println(m)
 	target := m["url"].(string)
 	expire := m["expireAt"].(string)
-	fmt.Println(target, expire)
-	fmt.Println(reflect.TypeOf(target), reflect.TypeOf(expire))
 	t, _ := time.Parse(time.RFC3339, expire)
-	fmt.Println(t)
 	_expire := int(t.Sub(time.Now()).Seconds())
-	fmt.Println(_expire)
 
 	// 產生一個沒用過的ID
 	var textid string
