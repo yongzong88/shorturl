@@ -15,6 +15,7 @@ import (
 
 const HOST = "http://localhost:9000"
 
+// 測試加短網址，透過 http
 func Test_AddComplete(t *testing.T) {
 
 	ct := time.Now().Add(time.Second * 100)
@@ -43,6 +44,7 @@ func Test_AddComplete(t *testing.T) {
 	assert.Equal(t, http.StatusOK, response.StatusCode)
 }
 
+// 測試加短網址，透過 handle 直接操作
 func Test_AddHandle(t *testing.T) {
 	router := router()
 
@@ -62,6 +64,7 @@ func Test_AddHandle(t *testing.T) {
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
+// 測試加短網址，然後拜訪短網址
 func Test_AddThenVisit(t *testing.T) {
 	router := router()
 
@@ -101,6 +104,59 @@ func Test_AddThenVisit(t *testing.T) {
 	assert.Equal(t, result.Request.URL.String(), testUrl)
 }
 
+// 測試加短網址，過時之後再拜訪短網址
+func Test_AddThenVisitAfterTimeout(t *testing.T) {
+	router := router()
+
+	w := httptest.NewRecorder() // 取得 ResponseRecorder 物件
+
+	// 有效時間 3 秒
+	ct := time.Now().Add(3 * time.Second)
+	t.Log("CT", ct)
+	testUrl := "https://www.google.com"
+	reqbody := map[string]string{
+		"url":      testUrl,
+		"expireAt": ct.Format(time.RFC3339),
+	}
+	jsonStr, _ := json.Marshal(reqbody)
+
+	req, _ := http.NewRequest("POST", "/api/v1/urls", bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
+
+	router.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	// 取得回應
+	var response map[string]string = make(map[string]string)
+	err := json.Unmarshal(w.Body.Bytes(), &response)
+	assert.Equal(t, err, nil)
+
+	t.Log("Short URL =", response["id"])
+
+	// 	暫停 5 秒
+	time.Sleep(5 * time.Second)
+
+	req, _ = http.NewRequest("GET", HOST+"/"+response["id"], nil)
+	client := &http.Client{}
+	result, err := client.Do(req)
+	assert.Equal(t, err, nil)
+	defer result.Body.Close()
+
+	assert.Equal(t, result.StatusCode, 404)
+}
+
+// 測試不存在的短網址
+func Test_VisitNonExist(t *testing.T) {
+	req, _ := http.NewRequest("GET", HOST+"/ZZ", nil)
+	client := &http.Client{}
+	result, err := client.Do(req)
+	assert.Equal(t, err, nil)
+	defer result.Body.Close()
+
+	assert.Equal(t, result.StatusCode, 404)
+}
+
+// 測試加短網址(Handle)的效能
 func Benchmark_AddHandle(b *testing.B) {
 
 	router := router()
@@ -119,6 +175,7 @@ func Benchmark_AddHandle(b *testing.B) {
 	}
 }
 
+// 測試加短網址(Handle)，然後拜訪短網址的效能，可能會被視為攻擊行為
 // func Benchmark_AddThenMultiVisit(b *testing.B) {
 // 	router := router()
 
