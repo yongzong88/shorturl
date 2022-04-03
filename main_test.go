@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
@@ -19,7 +18,6 @@ const HOST = "http://localhost:9000"
 func Test_AddComplete(t *testing.T) {
 
 	ct := time.Now().Add(time.Second * 100)
-	fmt.Println(ct)
 	reqbody := map[string]string{
 		"url":      "https://www.hinet.net",
 		"expireAt": ct.Format(time.RFC3339),
