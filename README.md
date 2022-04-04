@@ -15,6 +15,11 @@ go install
 go run main.go
 ```
 
+## 假設與限制
+* 轉成短網址時輸入是使用POST 
+* 輸入格式為json,需要輸入一個url及一個3339格式的過期時間
+* 短網址導向原始網站輸入是使用GET
+
 ## 參考文獻
 1. [完全GO语言实现的短网址微服务，可自用，可部署，美呆了](https://zhuanlan.zhihu.com/p/111573621)
 2. [How to Make a Custom URL Shortener Using Golang and Redis](https://intersog.com/blog/how-to-write-a-custom-url-shortener-using-golang-and-redis/)
@@ -30,7 +35,7 @@ C. 優劣比較
 
 ### 資料庫選用
 
-### 假設與限制
+
 
 ### 測試
 ```bash
