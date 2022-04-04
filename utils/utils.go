@@ -10,6 +10,7 @@ const (
 	textlen  = uint64(len(alphabet))                                            // 可用字元數
 	maxlen   = 10                                                               // 最長短網址長度
 	minlen   = 3                                                                // 最短短網址長度
+	extra    = 2                                                                // textlen/(textlen+extra)
 )
 
 func init() {
@@ -17,10 +18,16 @@ func init() {
 }
 
 func RandID() string {
-	n := minlen + rand.Intn(maxlen-minlen+1)
 	var id string
-	for k := 0; k < n; k++ {
+	for i := 0; i < minlen; i++ {
 		ch := rand.Intn(int(textlen))
+		id += string(alphabet[ch])
+	}
+	for i := minlen; i < maxlen; i++ {
+		ch := rand.Intn(int(textlen) + extra)
+		if ch >= int(textlen) {
+			break
+		}
 		id += string(alphabet[ch])
 	}
 	return id
