@@ -28,9 +28,21 @@ func add(c *gin.Context) {
 	if err != nil {
 		return
 	}
-	target := m["url"].(string)
-	expire := m["expireAt"].(string)
-	t, _ := time.Parse(time.RFC3339, expire)
+	target, ok := m["url"].(string)
+	if !ok {
+		c.JSON(400, gin.H{"message": "Invaid request"})
+		return
+	}
+	expire, ok := m["expireAt"].(string)
+	if !ok {
+		c.JSON(400, gin.H{"message": "Invaid request"})
+		return
+	}
+	t, err := time.Parse(time.RFC3339, expire)
+	if err != nil {
+		c.JSON(400, gin.H{"message": "Invaid request"})
+		return
+	}
 	_expire := int(t.Sub(time.Now()).Seconds())
 
 	// 產生一個沒用過的ID

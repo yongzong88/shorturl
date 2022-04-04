@@ -62,6 +62,25 @@ func Test_AddHandle(t *testing.T) {
 	assert.Equal(t, http.StatusOK, w.Code)
 }
 
+// 測試加短網址，透過 handle 直接操作，錯誤輸入
+func Test_AddHandle_Error1(t *testing.T) {
+	router := router()
+
+	w := httptest.NewRecorder() // 取得 ResponseRecorder 物件
+	// ct := time.Now().Add(time.Second * 10)
+	reqbody := map[string]string{
+		"url": "https://www.hinet.net",
+	}
+	jsonStr, _ := json.Marshal(reqbody)
+	req, _ := http.NewRequest("POST", "/api/v1/urls", bytes.NewBuffer(jsonStr))
+	req.Header.Set("Content-Type", "application/json")
+
+	router.ServeHTTP(w, req)
+	t.Log(w.Body.String())
+
+	assert.Equal(t, 400, w.Code)
+}
+
 // 測試加短網址，然後拜訪短網址
 func Test_AddThenVisit(t *testing.T) {
 	router := router()
