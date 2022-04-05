@@ -58,5 +58,15 @@ go run main.go
 go test -v # 語法測試
 go test -bench=. -run=none # 測試效能
 ```
-![image](https://user-images.githubusercontent.com/91168102/161759045-c4b49724-4bac-4a4d-a891-ec3782826e21.png)
+* 測試內容包含
+  * 測試加短網址,透過http
+  * 測試加短網址，透過 handle 直接操作
+  * 測試加短網址，透過 handle 直接操作，錯誤輸入回傳400
+  * 測試加短網址，然後拜訪短網址
+  * 測試加短網址，過時之後再拜訪短網址
+  * 測試不存在的短網址
+  * 效能測試
+    * 測試加短網址(Handle)的效能   
+![image](https://user-images.githubusercontent.com/91168102/161761979-04a98845-3ca1-4ce1-b380-6f3375d8a847.png)
+總共18747筆,平均時間63371奈秒
 
