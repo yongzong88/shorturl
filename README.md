@@ -23,7 +23,7 @@ go run main.go
 ## 參考文獻
 1. [完全GO语言实现的短网址微服务，可自用，可部署，美呆了](https://zhuanlan.zhihu.com/p/111573621)
 2. [How to Make a Custom URL Shortener Using Golang and Redis](https://intersog.com/blog/how-to-write-a-custom-url-shortener-using-golang-and-redis/)
-3. 
+
 ## 思路
 在參考第二篇文章的分析後決定使用1-10,A-Z,a-z作為短網址的字元,並產生長度為3-10個字元的短網址
 在參考過網路上其他人的做法之後,發現都是使用整數轉換為62進位的字串
