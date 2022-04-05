@@ -55,4 +55,5 @@ go run main.go
 go test -v # 語法測試
 go test -bench=. -run=none # 測試效能
 ```
+![image](https://user-images.githubusercontent.com/91168102/161759045-c4b49724-4bac-4a4d-a891-ec3782826e21.png)
 
