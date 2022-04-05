@@ -4,11 +4,11 @@
 ## 參考文獻
 1. [完全GO语言实现的短网址微服务，可自用，可部署，美呆了](https://zhuanlan.zhihu.com/p/111573621)
   * 這篇文章算是最簡易的短網址產生程式
-  * 使用套件為redis,gin
+  * 使用套件為 redis , gin
   * 短網址產生方式為按照順序產生數字後轉換為62進位的字串
 2. [How to Make a Custom URL Shortener Using Golang and Redis](https://intersog.com/blog/how-to-write-a-custom-url-shortener-using-golang-and-redis/)
   * 這篇文章有完整的分析及框架
-  * 使用套件為redis,fasthttp
+  * 使用套件為 redis , fasthttp
   * 短網址產生方式為產生隨機亂數後判斷有無使用過,再轉為62進位的字串
 
 ## 假設與限制
